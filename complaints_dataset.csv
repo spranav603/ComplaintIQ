@@ -1,0 +1,151 @@
+complaint_text,category
+"My bill is incorrect and I was charged twice for the same service",Billing
+"I never received my order and it has been 2 weeks",Delivery
+"The app keeps crashing whenever I try to login",Technical Support
+"The product I received was broken and of very poor quality",Product Quality
+"I was overcharged on my last invoice",Billing
+"My package was delivered to the wrong address",Delivery
+"I cannot reset my password and the OTP is not arriving",Technical Support
+"The item looks completely different from what was shown on the website",Product Quality
+"There is an unauthorized transaction on my account",Billing
+"My shipment has been stuck in transit for 5 days",Delivery
+"The website is down and I cannot place any orders",Technical Support
+"The fabric of the shirt I ordered started tearing after one wash",Product Quality
+"I was billed for a subscription I already cancelled",Billing
+"The delivery was marked as complete but I received nothing",Delivery
+"I cannot connect to the server and keep getting timeout errors",Technical Support
+"The food item I ordered had a foul smell and was clearly expired",Product Quality
+"My account was charged without any prior notice",Billing
+"Driver delivered to a neighbour without informing me",Delivery
+"The login button does not work on my mobile browser",Technical Support
+"Paint is peeling off the furniture I bought just last month",Product Quality
+"I have been charged a late fee even though I paid on time",Billing
+"My order has been pending for 10 days with no update",Delivery
+"Video streaming keeps buffering and the quality is very bad",Technical Support
+"The phone I bought has a cracked screen right out of the box",Product Quality
+"The refund was not credited back to my account",Billing
+"Delivery person refused to come to my floor and left the package outside",Delivery
+"My smart TV remote is not pairing with the app",Technical Support
+"The blender I bought stopped working after 3 uses",Product Quality
+"You deducted money twice from my wallet",Billing
+"Order was partially delivered and one item is still missing",Delivery
+"The internet keeps disconnecting every few minutes",Technical Support
+"The shoes I ordered have different sizes for left and right foot",Product Quality
+"I am being charged for a service I never subscribed to",Billing
+"The estimated delivery was yesterday and nothing has arrived",Delivery
+"Cannot download the app on my Android device",Technical Support
+"The toy broke immediately and has sharp edges dangerous for children",Product Quality
+"My premium plan was not activated even after payment",Billing
+"Package arrived completely damaged due to poor packaging",Delivery
+"The chatbot on your site keeps giving wrong answers",Technical Support
+"The cream I ordered caused a skin rash and looks fake",Product Quality
+"Invoice total does not match the items I ordered",Billing
+"The tracking number you sent does not show any information",Delivery
+"My account is locked and support is not responding",Technical Support
+"Book pages are printed upside down and chapters are missing",Product Quality
+"Double payment was taken and no receipt was issued",Billing
+"Three delivery attempts failed without any prior communication",Delivery
+"The QR code on the product does not scan",Technical Support
+"Helmet I bought has a visible crack in the visor",Product Quality
+"My cashback was not applied despite completing all conditions",Billing
+"Item marked out for delivery at 8am has still not arrived by 9pm",Delivery
+"Unrecognized charge of $49.99 on my credit card statement",Billing
+"My package was crushed during delivery and contents spilled",Delivery
+"Two factor authentication SMS code is not coming to my phone",Technical Support
+"The zipper on the jacket broke on the first try",Product Quality
+"Subscription fee charged after trial was explicitly cancelled",Billing
+"Courier driver left package in heavy rain without plastic wrapping",Delivery
+"Database connection timeout error 500 when loading dashboard",Technical Support
+"The non-stick coating of the frying pan is peeling into food",Product Quality
+"Auto-renewal failed but money was deducted from bank account",Billing
+"Express 1-day delivery took 6 days to arrive",Delivery
+"Application screen goes completely black after opening",Technical Support
+"The bluetooth speaker battery drains in 10 minutes",Product Quality
+"Received double billing for monthly cloud subscription",Billing
+"Package handed to complete stranger without asking for signature",Delivery
+"Push notifications are not working on my mobile phone",Technical Support
+"The leather bag started peeling off after one day of use",Product Quality
+"Money deducted from card but order status shows unpaid",Billing
+"Shipment tracking has not updated for over 72 hours",Delivery
+"API key authentication returns 403 forbidden error unexpectedly",Technical Support
+"The coffee machine leaks water from the bottom during brewing",Product Quality
+"I was charged currency conversion fees on a domestic transaction",Billing
+"Delivery boy was very rude and demanded extra delivery cash",Delivery
+"Unable to export reports to PDF or Excel format",Technical Support
+"The smart watch screen touch response is unresponsive",Product Quality
+"Extra handling fee added to my order without disclosure",Billing
+"Delivery address was updated before shipping but delivered to old address",Delivery
+"Forgot password link throws 404 page not found error",Technical Support
+"The chair leg broke when sitting on it and is unsafe",Product Quality
+"Discount code was applied at checkout but full price was charged",Billing
+"Received someone else's order containing completely different items",Delivery
+"Website SSL certificate error preventing secure checkout",Technical Support
+"Wireless earbuds have zero bass and one side has no sound",Product Quality
+"Annual plan billed monthly price rate by mistake",Billing
+"Delivery status says handed to resident but nobody was home",Delivery
+"File upload crashes the app when file size is over 5MB",Technical Support
+"The plastic parts of the food processor melted during normal operation",Product Quality
+"Refund amount is $20 less than what I paid for the returned item",Billing
+"Shipping box arrived open and unsealed with missing items",Delivery
+"Desktop client constantly freezes on sync operation",Technical Support
+"Water bottle leaks from the cap even when tightened completely",Product Quality
+"Membership fee charged twice in the same billing cycle",Billing
+"Delivery driver threw the fragile glass parcel over the fence",Delivery
+"Integration webhook fails to fire on transaction completion",Technical Support
+"The soles of the running shoes detached after a light jog",Product Quality
+"Hidden service charge added to invoice without line item details",Billing
+"Package returned to sender without attempting delivery to my address",Delivery
+"Microphone input does not record audio in the web client",Technical Support
+"The laptop screen has bright dead pixels right out of the box",Product Quality
+"Payment gateway failed but card was still charged",Billing
+"International delivery customs fee charged despite free shipping offer",Delivery
+"Software update corrupted my user settings and lost configuration",Technical Support
+"Mattress sank in the middle after just one week of use",Product Quality
+"Pro-rated refund was calculated incorrectly upon account cancellation",Billing
+"Dispatched order tracking says canceled by logistics carrier",Delivery
+"User session expires every 2 minutes requiring constant re-login",Technical Support
+"The stainless steel cutlery set started rusting after dishwasher cycle",Product Quality
+"Overcharged taxes on non-taxable item in order bill",Billing
+"Courier rescheduled delivery 3 times without consent",Delivery
+"Search feature returns blank results for valid product titles",Technical Support
+"Power bank overheats dangerously while charging phone",Product Quality
+"Billing cycle charged on 28th instead of 1st of month",Billing
+"Express parcel delayed due to incorrect routing facility dispatch",Delivery
+"Dark mode toggle resets back to light mode on page refresh",Technical Support
+"Keyboard keys sticking and typing double letters out of the box",Product Quality
+"Payment processor declined my card but my bank account was still debited $85",Billing
+"Driver stole my package and forged my signature on the electronic pad",Delivery
+"OAuth login button triggers infinite redirect loop on Chrome browser",Technical Support
+"The stainless steel water bottle liner rusted after two days of use",Product Quality
+"Unexpected foreign transaction surcharge applied to my domestic credit card bill",Billing
+"Package was delivered to a different street address two miles away from my house",Delivery
+"Application freezes completely whenever I attempt to upload a profile picture file",Technical Support
+"The seam on the denim jeans ripped apart during first wear",Product Quality
+"Monthly recurring charge increased from $15 to $29 without any prior email notification",Billing
+"Shipping carrier update shows exception delay in transit for over one week",Delivery
+"Web app UI dashboard elements overlap and break when viewed on iPad resolution",Technical Support
+"Electric kettle handle melted and detached while boiling hot water",Product Quality
+"Disputed charge refund was revoked by billing department without explanation",Billing
+"Order dispatch email sent 5 days ago but tracking shows carrier has not received parcel",Delivery
+"Forgot password reset link sends token expired error immediately upon clicking",Technical Support
+"Wireless keyboard keys stop registering inputs after 15 minutes of non-use",Product Quality
+"Sales tax calculated at 12% instead of the local 7% tax rate on checkout",Billing
+"Locker delivery code provided by courier does not open the physical station door",Delivery
+"Webhooks failed to trigger event payloads after server infrastructure update",Technical Support
+"Ceramic plate cracked into pieces when exposed to warm dish water",Product Quality
+"Reactivation fee charged even though subscription was paused according to terms",Billing
+"Overnight priority delivery order arrived 4 days late with no shipping refund",Delivery
+"REST API endpoint returns internal server error 500 when querying user profile",Technical Support
+"Leather shoes started peeling and flaking material after one light walk",Product Quality
+"Charged twice for single item due to website payment gateway retry glitch",Billing
+"Delivery driver dropped fragile glass parcel from second story stairs",Delivery
+"Mobile application battery drain is excessively high running in background",Technical Support
+"Microwave turntable glass plate arrived shattered into tiny pieces",Product Quality
+"Invoice total calculation includes items that were removed from shopping cart",Billing
+"Dispatched parcel sent via standard mail instead of paid express shipping",Delivery
+"Two-factor authentication code email takes over 30 minutes to arrive in inbox",Technical Support
+"Backpack strap stitching unraveled under light load on first day",Product Quality
+"Subscription tier automatically upgraded to Pro without customer authorization",Billing
+"Courier marked delivery failed claiming recipient unavailable when home all day",Delivery
+"Dark mode UI text turns invisible white-on-white on customer settings screen",Technical Support
+"Non-stick pan coating began flaking off into food after gentle hand washing",Product Quality

@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>ComplaintIQ — Customer Support Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#0b0d12;--surface:#171b22;--surface2:#20262d;--surface3:#2a3238;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
+  --text:#f4f1e8;--muted:#70777e;--muted2:#a4a9a8;
+  --accent:#e98b4a;--green:#62c6a3;--ai:#e5bd63;
+  --high:#ff4d6a;--medium:#ffb84d;--low:#00e5b0;
+  --billing:#e98b4a;--delivery:#8fb8b0;--tech:#e5bd63;--quality:#62c6a3;
+  --r:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;padding-bottom:60px}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(229,189,99,0.035)1px,transparent 1px),
+                   linear-gradient(90deg,rgba(229,189,99,0.035)1px,transparent 1px);
+  background-size:48px 48px}
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 50% 40% at 80% 0,rgba(98,198,163,0.08),transparent 70%),
+             radial-gradient(ellipse 40% 30% at 10% 90%,rgba(233,139,74,0.06),transparent 70%)}
+
+/* HEADER */
+header{position:sticky;top:0;z-index:100;background:rgba(7,9,15,0.88);
+  backdrop-filter:blur(20px);border-bottom:1px solid var(--border);
+  padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:12px}
+.lm{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--green));
+  display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;
+  font-weight:800;font-size:16px;color:#fff;box-shadow:0 0 18px rgba(0,229,176,0.3)}
+.lt h1{font-family:'Syne',sans-serif;font-size:16px;font-weight:700}
+.lt p{font-size:10px;color:var(--muted2);font-family:'DM Mono',monospace;letter-spacing:.4px}
+.user-info{display:flex;align-items:center;gap:14px}
+.user-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--accent));
+  display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:13px;color:#fff}
+.user-name{font-size:13px;font-weight:600}
+.user-role{font-size:10px;color:var(--green);font-family:'DM Mono',monospace}
+.logout-btn{background:transparent;border:1px solid var(--border2);color:var(--muted2);
+  padding:6px 12px;border-radius:7px;font-size:12px;cursor:pointer;font-family:'DM Mono',monospace;transition:all .2s}
+.logout-btn:hover{color:var(--high);border-color:rgba(255,77,106,.4)}
+
+/* LAYOUT */
+.page{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:32px 24px}
+.page-title{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;margin-bottom:4px}
+.page-sub{font-size:13px;color:var(--muted2);margin-bottom:28px}
+
+/* PANEL */
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:24px}
+.ph{padding:16px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.ph h2{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px}
+.pb{padding:22px}
+
+/* CHANNELS */
+.channels-label{font-size:11px;font-family:'DM Mono',monospace;color:var(--muted2);text-transform:uppercase;margin-bottom:8px}
+.channels{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.ch{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:20px;
+  border:1px solid var(--border2);font-size:12px;cursor:pointer;transition:all .2s;
+  background:var(--surface2);color:var(--muted2);font-family:'DM Mono',monospace}
+.ch.active{background:rgba(0,229,176,0.1);border-color:rgba(0,229,176,0.4);color:var(--green)}
+
+/* FORM */
+.cw{position:relative}
+.cc{position:absolute;bottom:12px;right:14px;font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);pointer-events:none}
+textarea{width:100%;min-height:130px;background:var(--surface2);border:1px solid var(--border2);
+  border-radius:12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;
+  padding:16px 16px 30px;resize:vertical;outline:none;transition:border-color .2s,box-shadow .2s;line-height:1.6}
+textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(0,229,176,0.08)}
+textarea::placeholder{color:var(--muted)}
+.sub-btn{width:100%;margin-top:14px;padding:14px;border-radius:10px;border:none;cursor:pointer;
+  font-family:'Syne',sans-serif;font-size:14px;font-weight:700;
+  background:linear-gradient(135deg,var(--green),var(--accent));color:#07090f;
+  transition:all .2s;box-shadow:0 4px 18px rgba(0,229,176,0.25)}
+.sub-btn:hover{box-shadow:0 6px 24px rgba(0,229,176,0.35);transform:translateY(-1px)}
+.sub-btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* AI PIPELINE STEPPER */
+#ai-proc{display:none;margin-top:16px;background:var(--surface2);border-radius:12px;
+  border:1px solid rgba(192,132,252,.25);padding:18px}
+.steps{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.step{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--muted2);
+  padding:8px 12px;border-radius:8px;transition:all .3s;font-family:'DM Mono',monospace}
+.step.active{color:var(--ai);background:rgba(192,132,252,.08);border:1px solid rgba(192,132,252,.2)}
+.step.done{color:var(--green);background:rgba(0,229,176,.05)}
+
+/* RESULT CARD */
+#result-card{display:none;margin-top:16px;background:var(--surface2);border-radius:14px;
+  overflow:hidden;border:1px solid var(--border2);animation:fadeIn .35s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.rb2{padding:16px 20px;background:rgba(0,229,176,.08);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--green)}
+.rrows{padding:16px 20px}
+.rr{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
+.rr:last-child{border-bottom:none}
+.rl{font-size:12px;color:var(--muted2);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.4px}
+.rv{font-size:13px;font-weight:600;text-align:right}
+.badge{padding:4px 10px;border-radius:20px;font-size:11px;font-family:'DM Mono',monospace;font-weight:500;display:inline-block}
+.badge.Billing{background:rgba(255,124,77,0.15);color:var(--billing);border:1px solid rgba(255,124,77,0.3)}
+.badge.Delivery{background:rgba(79,140,255,0.15);color:var(--delivery);border:1px solid rgba(79,140,255,0.3)}
+.badge.Technical{background:rgba(176,111,255,0.15);color:var(--tech);border:1px solid rgba(176,111,255,0.3)}
+.badge.Product{background:rgba(0,229,176,0.15);color:var(--quality);border:1px solid rgba(0,229,176,0.3)}
+.badge.High{background:rgba(255,77,106,0.15);color:var(--high)}
+.badge.Medium{background:rgba(255,184,77,0.15);color:var(--medium)}
+.badge.Low{background:rgba(0,229,176,0.15);color:var(--low)}
+
+.ai-reply-box{margin:16px 20px 20px;background:rgba(192,132,252,.07);border:1px solid rgba(192,132,252,.25);
+  border-radius:12px;padding:16px}
+.ai-reply-hdr{font-size:12px;font-family:'DM Mono',monospace;color:var(--ai);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.ai-reply-txt{font-size:13px;line-height:1.6;color:var(--text)}
+
+.csat-box{margin-top:12px;display:flex;align-items:center;gap:12px;font-size:12px;color:var(--muted2)}
+.csat-btn{background:var(--surface);border:1px solid var(--border2);color:var(--text);padding:5px 12px;border-radius:8px;
+  cursor:pointer;font-size:12px;transition:all .2s}
+.csat-btn:hover{border-color:var(--green);color:var(--green)}
+
+/* MY COMPLAINTS LIST */
+.complaint-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;
+  padding:16px 20px;margin-bottom:12px;transition:all .2s}
+.complaint-card:hover{border-color:var(--border2);transform:translateY(-1px)}
+.cc-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.cc-id{font-family:'DM Mono',monospace;font-size:12px;color:var(--muted2)}
+.cc-txt{font-size:14px;line-height:1.5;margin-bottom:12px;color:var(--text)}
+.cc-ftr{display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid var(--border);font-size:12px;color:var(--muted2);font-family:'DM Mono',monospace}
+
+/* TIMELINE TRACKER */
+.timeline{display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.t-node{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;font-family:'DM Mono',monospace;color:var(--muted)}
+.t-node.done{color:var(--green)}
+.t-dot{width:10px;height:10px;border-radius:50%;background:var(--muted);transition:all .3s}
+.t-node.done .t-dot{background:var(--green);box-shadow:0 0 8px var(--green)}
+
+/* v3 customer workspace */
+body{background:#050711;font-family:'Outfit',sans-serif}
+body::after{background:radial-gradient(ellipse 55% 35% at 82% 0,rgba(0,242,254,.09),transparent 70%),radial-gradient(ellipse 45% 35% at 8% 70%,rgba(168,85,247,.08),transparent 70%)}
+header{height:72px;padding:0 clamp(16px,4vw,48px);background:rgba(5,7,17,.76);border-bottom-color:rgba(0,242,254,.12)}
+.lm{background:linear-gradient(135deg,var(--accent),var(--ai),var(--green));box-shadow:0 0 22px rgba(0,242,254,.24)}
+.page{max-width:1120px;padding:48px clamp(16px,4vw,42px)}
+.page-title{font-size:clamp(28px,4vw,44px);letter-spacing:-.8px;background:linear-gradient(110deg,#fff,#a6b5d8 55%,var(--cyan));background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.page-sub{font-size:15px;line-height:1.6;max-width:650px;margin-top:8px;margin-bottom:30px}
+.panel{background:rgba(15,20,35,.78);border-color:rgba(255,255,255,.1);box-shadow:0 18px 55px rgba(0,0,0,.16)}
+.panel:first-of-type{border-color:rgba(0,242,254,.22);box-shadow:0 18px 55px rgba(0,0,0,.2),0 0 42px rgba(0,242,254,.05)}
+.ph{padding:18px 24px;background:rgba(255,255,255,.018)}.ph h2{font-size:15px}.pb{padding:26px}
+.ch{border-radius:9px;padding:10px 14px;background:rgba(255,255,255,.025)}.ch.active{background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.52);box-shadow:0 0 18px rgba(16,185,129,.08)}
+textarea{min-height:170px;background:rgba(7,10,21,.7);border-color:rgba(255,255,255,.15);font-size:15px;padding:18px 18px 32px}textarea:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,242,254,.1),0 0 28px rgba(0,242,254,.06)}
+.sub-btn{background:linear-gradient(110deg,var(--green),var(--accent) 65%,var(--ai));color:#fff;padding:16px;box-shadow:0 8px 26px rgba(16,185,129,.2)}
+.complaint-card{background:rgba(255,255,255,.025);border-color:rgba(255,255,255,.09);padding:20px}.complaint-card:hover{border-color:rgba(0,242,254,.3);box-shadow:0 10px 26px rgba(0,0,0,.2)}
+.ai-reply-box{background:rgba(168,85,247,.08);border-color:rgba(168,85,247,.32);box-shadow:inset 3px 0 0 var(--ai)}
+@media(max-width:680px){header{height:auto;min-height:68px}.user-name,.user-role{display:none}.page{padding-top:30px}.pb{padding:18px}.ph{padding:15px 18px}.cc-ftr{align-items:flex-start;gap:8px;flex-wrap:wrap}.timeline{gap:3px}.t-node{font-size:9px;text-align:center}}
+
+/* Floating AI Chatbot Widget */
+.chat-widget-fab{position:fixed;bottom:24px;right:24px;z-index:200;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--ai),var(--green));color:#fff;border:none;box-shadow:0 8px 30px rgba(0,242,254,0.35);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:24px;transition:all .3s cubic-bezier(.175,.885,.32,1.275)}
+.chat-widget-fab:hover{transform:scale(1.1);box-shadow:0 12px 38px rgba(0,242,254,0.5)}
+.chat-widget-badge{position:absolute;top:-2px;right:-2px;width:14px;height:14px;background:#ff4d6a;border-radius:50%;border:2px solid #050711}
+
+.chat-widget-window{position:fixed;bottom:94px;right:24px;z-index:200;width:min(90vw,380px);height:500px;background:rgba(15,20,35,0.94);backdrop-filter:blur(24px);border:1px solid rgba(0,242,254,0.25);border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,0.6);display:flex;flex-direction:column;overflow:hidden;transform:scale(0.9) translateY(20px);opacity:0;pointer-events:none;transition:all .25s cubic-bezier(.175,.885,.32,1.275)}
+.chat-widget-window.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all}
+
+.chat-hdr{padding:16px 20px;background:rgba(5,7,17,0.85);border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between}
+.chat-hdr-info{display:flex;align-items:center;gap:10px}
+.chat-hdr-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--ai));display:flex;align-items:center;justify-content:center;font-size:14px;color:#000;font-weight:bold}
+.chat-hdr-title{font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:var(--text)}
+.chat-hdr-status{font-size:10px;font-family:'DM Mono',monospace;color:var(--green);display:flex;align-items:center;gap:4px}
+.chat-close-btn{background:transparent;border:none;color:var(--muted2);font-size:18px;cursor:pointer}
+.chat-close-btn:hover{color:var(--text)}
+
+.chat-body{flex:1;padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;font-size:13px;line-height:1.5}
+.chat-msg{max-width:85%;padding:10px 14px;border-radius:14px;word-break:break-word}
+.chat-msg.bot{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:var(--text);align-self:flex-start;border-bottom-left-radius:3px}
+.chat-msg.user{background:linear-gradient(135deg,var(--accent),var(--ai));color:#000;font-weight:500;align-self:flex-end;border-bottom-right-radius:3px}
+
+.chat-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.chat-chip{background:rgba(0,242,254,0.08);border:1px solid rgba(0,242,254,0.3);color:var(--cyan);font-size:11px;font-family:'DM Mono',monospace;padding:5px 10px;border-radius:14px;cursor:pointer;transition:all .2s}
+.chat-chip:hover{background:var(--cyan);color:#000}
+
+.chat-ftr{padding:12px 14px;background:rgba(5,7,17,0.85);border-top:1px solid rgba(255,255,255,0.08);display:flex;gap:8px}
+.chat-input{flex:1;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:9px 12px;color:var(--text);font-size:13px;outline:none}
+.chat-input:focus{border-color:var(--cyan)}
+.chat-send-btn{background:var(--cyan);border:none;color:#000;padding:0 14px;border-radius:10px;font-weight:bold;cursor:pointer;transition:all .2s}
+.chat-send-btn:hover{background:var(--accent)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="lm">C</div>
+    <div class="lt">
+      <h1>ComplaintIQ</h1>
+      <p>CUSTOMER SUPPORT PORTAL</p>
+    </div>
+  </div>
+  <div class="user-info">
+    <div class="user-avatar" id="u-avatar">U</div>
+    <div>
+      <div class="user-name" id="u-name">Customer</div>
+      <div class="user-role" id="u-email">customer@example.com</div>
+    </div>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
+</header>
+
+<div class="page">
+  <div class="page-title">Submit Support Ticket</div>
+  <div class="page-sub">Our dual-engine AI categorizes your ticket, estimates SLA, and routes to specialists instantly.</div>
+
+  <!-- COMPLAINT FORM PANEL -->
+  <div class="panel">
+    <div class="ph">
+      <h2><span>✨</span> Submit New Complaint</h2>
+      <span style="font-size:11px;font-family:'DM Mono',monospace;color:var(--green)">AI Triaging Active</span>
+    </div>
+    <div class="pb">
+      <div class="channels-label">Intake Channel</div>
+      <div class="channels">
+        <div class="ch active" onclick="setChannel(this,'web')">🌐 Web Portal</div>
+        <div class="ch" onclick="setChannel(this,'app')">📱 Mobile App</div>
+        <div class="ch" onclick="setChannel(this,'email')">✉️ Email</div>
+        <div class="ch" onclick="setChannel(this,'chat')">💬 Chatbot</div>
+      </div>
+
+      <div class="channels-label">Product or site having the issue</div>
+      <input id="product-name" type="text" placeholder="e.g. ShopSphere Checkout, LumaView Monitor, or ParcelPilot" style="width:100%;margin-bottom:16px;background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:12px 14px;color:var(--text);font:14px 'DM Sans',sans-serif;outline:none" />
+
+      <div class="channels-label">Response Language</div>
+      <select id="language-select" style="width:100%;margin-bottom:16px;background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:11px 14px;color:var(--text);font:13px 'DM Sans',sans-serif">
+        <option>English</option><option>Spanish</option><option>French</option><option>German</option><option>Hindi</option>
+      </select>
+
+      <div class="cw">
+        <textarea id="complaint-input" placeholder="Describe your issue in detail (e.g. 'I was billed twice on invoice #9821' or 'My package arrived damaged')..." oninput="updateCharCt()"></textarea>
+        <div class="cc" id="char-ct">0 chars</div>
+      </div>
+
+      <button class="sub-btn" id="submit-btn" onclick="submitComplaint()">Submit & Triage Complaint</button>
+
+      <!-- AI PIPELINE STEPPER -->
+      <div id="ai-proc">
+        <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--ai)">🤖 AI Processing Pipeline</div>
+        <div class="steps">
+          <div class="step" id="st-1"><span>1.</span> Sanitizing & Lemmatizing Input Text</div>
+          <div class="step" id="st-2"><span>2.</span> LinearSVC Model Category Prediction</div>
+          <div class="step" id="st-3"><span>3.</span> Dual-AI Verification & Sentiment Extraction</div>
+          <div class="step" id="st-4"><span>4.</span> Assigning SLA Deadline & Support Team Queue</div>
+          <div class="step" id="st-5"><span>5.</span> Generating Empathetic Customer Response</div>
+        </div>
+      </div>
+
+      <!-- RESULT CARD -->
+      <div id="result-card">
+        <div class="rb2">
+          <span>✓ Complaint Successfully Logged & Routed</span>
+          <span id="res-id" style="font-size:12px;font-family:'DM Mono',monospace;color:var(--muted2)">Ticket #--</span>
+        </div>
+        <div class="rrows">
+          <div class="rr"><div class="rl">Verified Category</div><div class="rv" id="res-cat">--</div></div>
+          <div class="rr"><div class="rl">Product / Site</div><div class="rv" id="res-product">--</div></div>
+          <div class="rr"><div class="rl">Assigned Support Team</div><div class="rv" id="res-team">--</div></div>
+          <div class="rr"><div class="rl">Priority & SLA Window</div><div class="rv" id="res-prio">--</div></div>
+          <div class="rr"><div class="rl">ML Classifier Confidence</div><div class="rv" id="res-conf" style="color:var(--cyan)">--</div></div>
+          <div class="rr"><div class="rl">Detected Sentiment</div><div class="rv" id="res-sent">--</div></div>
+          <div class="rr"><div class="rl">Detected Language</div><div class="rv" id="res-lang">English</div></div>
+        </div>
+        <div class="ai-reply-box">
+          <div class="ai-reply-hdr"><span>✨</span> AI Immediate Customer Response:</div>
+          <div class="ai-reply-txt" id="res-reply">--</div>
+          <div class="csat-box">
+            <span>Was this response helpful?</span>
+            <button class="csat-btn" onclick="rateReply(1)">👍 Yes</button>
+            <button class="csat-btn" onclick="rateReply(0)">👎 No</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MY COMPLAINTS HISTORY -->
+  <div class="panel">
+    <div class="ph">
+      <h2><span>📋</span> My Complaint History</h2>
+      <button class="logout-btn" style="font-size:11px" onclick="loadMyComplaints()">Refresh Queue</button>
+    </div>
+    <div class="pb" id="complaints-list">
+      <div style="text-align:center;padding:24px;color:var(--muted2);font-family:'DM Mono',monospace">Loading tickets…</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = window.location.origin.includes('http') ? window.location.origin : 'http://localhost:5000';
+let activeChannel = 'web';
+let currentCid = null;
+
+const userRaw = localStorage.getItem('ciq_user');
+const token   = localStorage.getItem('ciq_token');
+if (!userRaw || !token) {
+  window.location.href = '/';
+}
+const user = JSON.parse(userRaw);
+
+document.getElementById('u-name').textContent = user.name || 'Customer';
+document.getElementById('u-email').textContent = user.email || 'customer@example.com';
+document.getElementById('u-avatar').textContent = (user.name || 'C')[0].toUpperCase();
+
+function logout() {
+  localStorage.clear();
+  window.location.href = '/';
+}
+
+function setChannel(el, ch) {
+  activeChannel = ch;
+  document.querySelectorAll('.ch').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function updateCharCt() {
+  const len = document.getElementById('complaint-input').value.length;
+  document.getElementById('char-ct').textContent = `${len} chars`;
+}
+
+function rateReply(helpful) {
+  if (!currentCid) return;
+  fetch(`${API}/complaints/${currentCid}/feedback`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+    body: JSON.stringify({ helpful })
+  }).then(() => alert('Thank you for rating our AI response!'));
+}
+
+async function submitComplaint() {
+  const text = document.getElementById('complaint-input').value.trim();
+  const productName = document.getElementById('product-name').value.trim();
+  if (text.length < 8) {
+    alert('Please type a more detailed description of your issue (at least 8 characters).');
+    return;
+  }
+  if (productName.length < 2) {
+    alert('Please tell us which product or site is currently having the issue.');
+    document.getElementById('product-name').focus();
+    return;
+  }
+
+  const subBtn = document.getElementById('submit-btn');
+  subBtn.disabled = true;
+  document.getElementById('result-card').style.display = 'none';
+  document.getElementById('ai-proc').style.display = 'block';
+
+  const resetSteps = () => {
+    for (let i = 1; i <= 5; i++) {
+      const s = document.getElementById(`st-${i}`);
+      s.className = 'step';
+    }
+  };
+  resetSteps();
+
+  const step = (n) => {
+    document.getElementById(`st-${n}`).className = 'step active';
+    if (n > 1) document.getElementById(`st-${n-1}`).className = 'step done';
+  };
+
+  step(1);
+  await new Promise(r => setTimeout(r, 250));
+  step(2);
+  await new Promise(r => setTimeout(r, 300));
+  step(3);
+  await new Promise(r => setTimeout(r, 250));
+
+  try {
+    const res = await fetch(`${API}/predict`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      body: JSON.stringify({ complaint: text, product_name: productName, channel: activeChannel, language: document.getElementById('language-select').value })
+    });
+    const data = await res.json();
+    if (data.error) { alert(data.error); return; }
+
+    currentCid = data.id;
+
+    step(4);
+    await new Promise(r => setTimeout(r, 250));
+    step(5);
+    await new Promise(r => setTimeout(r, 300));
+    document.getElementById('st-5').className = 'step done';
+
+    // Populate result card
+    document.getElementById('res-id').textContent = `Ticket #${data.id}`;
+    const catShort = data.category.split(' ')[0];
+    document.getElementById('res-cat').innerHTML = `<span class="badge ${catShort}">${data.category}</span>`;
+    document.getElementById('res-product').textContent = data.product_name || productName;
+    document.getElementById('res-team').textContent = data.team;
+    document.getElementById('res-prio').innerHTML = `<span class="badge ${data.priority}">${data.priority}</span> (${data.sla_hours}h SLA target)`;
+    document.getElementById('res-conf').textContent = `${data.confidence || 93.3}% Confidence`;
+    document.getElementById('res-sent').textContent = data.sentiment;
+    document.getElementById('res-lang').textContent = data.language || 'English';
+    document.getElementById('res-reply').textContent = data.reply;
+
+    document.getElementById('result-card').style.display = 'block';
+    document.getElementById('complaint-input').value = '';
+    document.getElementById('product-name').value = '';
+    updateCharCt();
+    loadMyComplaints();
+  } catch(e) {
+    alert('Failed to connect to backend server. Make sure app.py is running.');
+  } finally {
+    subBtn.disabled = false;
+  }
+}
+
+async function loadMyComplaints() {
+  const container = document.getElementById('complaints-list');
+  try {
+    const res = await fetch(`${API}/my-complaints`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const data = await res.json();
+    if (!data.length) {
+      container.innerHTML = '<div style="text-align:center;padding:24px;color:var(--muted2)">No complaints submitted yet. Use the form above to log an issue!</div>';
+      return;
+    }
+
+    container.innerHTML = data.map(c => {
+      const catShort = c.category.split(' ')[0];
+      const isResolved = c.status === 'Resolved';
+      return `
+        <div class="complaint-card">
+          <div class="cc-hdr">
+            <span class="cc-id">#${c.id} • ${c.timestamp}</span>
+            <span class="badge ${catShort}">${c.category}</span>
+          </div>
+          <div class="cc-txt">${c.text}</div>
+          <div style="font-size:12px;color:var(--green);margin-bottom:8px"><strong>Product / Site:</strong> ${c.product_name || 'Not specified'}</div>
+          <div style="font-size:12px;color:var(--muted2);margin-bottom:8px"><strong>AI Summary:</strong> ${c.summary || c.text.slice(0, 100)}</div>
+          <div class="cc-ftr">
+            <div>Team: <strong>${c.team}</strong></div>
+            <div>Priority: <span class="badge ${c.priority}">${c.priority}</span></div>
+            <div>Status: <strong style="color:${isResolved ? 'var(--green)' : 'var(--medium)'}">${c.status}</strong></div>
+          </div>
+          <div class="timeline">
+            <div class="t-node done"><div class="t-dot"></div>Submitted</div>
+            <div class="t-node done"><div class="t-dot"></div>AI Categorized</div>
+            <div class="t-node ${c.status !== 'Open' ? 'done' : ''}"><div class="t-dot"></div>Team Assigned</div>
+            <div class="t-node ${isResolved ? 'done' : ''}"><div class="t-dot"></div>${isResolved ? 'Resolved' : 'In Progress'}</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  } catch(e) {
+    container.innerHTML = '<div style="text-align:center;color:var(--high)">Error loading complaint history.</div>';
+  }
+}
+
+loadMyComplaints();
+
+function toggleChatWidget() {
+  const win = document.getElementById('chat-widget-win');
+  win.classList.toggle('open');
+}
+
+function quickChat(text) {
+  document.getElementById('chat-widget-input').value = text;
+  sendChatMessage();
+}
+
+function sendChatMessage() {
+  const input = document.getElementById('chat-widget-input');
+  const text = input.value.trim();
+  if (!text) return;
+
+  const body = document.getElementById('chat-widget-body');
+  
+  // User message
+  const userMsg = document.createElement('div');
+  userMsg.className = 'chat-msg user';
+  userMsg.textContent = text;
+  body.appendChild(userMsg);
+  input.value = '';
+  body.scrollTop = body.scrollHeight;
+
+  // Simulate AI response
+  setTimeout(() => {
+    const botMsg = document.createElement('div');
+    botMsg.className = 'chat-msg bot';
+    
+    const lowered = text.toLowerCase();
+    let reply = "I understand your issue. Would you like me to pre-fill your complaint into the support form above so our engineering team can triage it immediately?";
+    
+    if (lowered.includes('double') || lowered.includes('charge') || lowered.includes('bill')) {
+      reply = "For billing & double charges: Our finance team issues instant refunds once triaged. Click below to pre-fill the complaint form with this info!";
+    } else if (lowered.includes('delay') || lowered.includes('package') || lowered.includes('delivery')) {
+      reply = "For logistics & shipping delays: We cross-reference carrier GPS scans. Click below to file a priority tracking ticket.";
+    } else if (lowered.includes('crash') || lowered.includes('app') || lowered.includes('login')) {
+      reply = "For technical app issues: Our dev team patches iOS/Android releases within 24 hours. Click below to log a bug report.";
+    }
+    
+    botMsg.innerHTML = `${reply} <div class="chat-chips" style="margin-top:8px"><div class="chat-chip" onclick="autoFillForm('${text.replace(/'/g, "\\'")}')">📝 Pre-fill Complaint Form</div></div>`;
+    body.appendChild(botMsg);
+    body.scrollTop = body.scrollHeight;
+  }, 400);
+}
+
+function autoFillForm(text) {
+  document.getElementById('complaint-input').value = text;
+  updateCharCt();
+  toggleChatWidget();
+  document.getElementById('complaint-input').focus();
+  document.querySelector('.panel').scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+
+<!-- FLOATING INTERACTIVE AI SUPPORT CHATBOT WIDGET -->
+<button class="chat-widget-fab" onclick="toggleChatWidget()" title="Chat with ComplaintIQ Bot">
+  💬
+  <div class="chat-widget-badge"></div>
+</button>
+
+<div class="chat-widget-window" id="chat-widget-win">
+  <div class="chat-hdr">
+    <div class="chat-hdr-info">
+      <div class="chat-hdr-avatar">🤖</div>
+      <div>
+        <div class="chat-hdr-title">ComplaintIQ Assistant</div>
+        <div class="chat-hdr-status"><span>●</span> Online • AI Support</div>
+      </div>
+    </div>
+    <button class="chat-close-btn" onclick="toggleChatWidget()">✕</button>
+  </div>
+  <div class="chat-body" id="chat-widget-body">
+    <div class="chat-msg bot">
+      Hi! I'm your ComplaintIQ AI Assistant. How can I help you today? You can select a quick query or describe your issue.
+      <div class="chat-chips">
+        <div class="chat-chip" onclick="quickChat('💳 Double charged on invoice')">Double Charge</div>
+        <div class="chat-chip" onclick="quickChat('🚚 Package delayed in transit')">Delayed Delivery</div>
+        <div class="chat-chip" onclick="quickChat('📱 Mobile app keeps crashing')">App Crash</div>
+        <div class="chat-chip" onclick="quickChat('📦 Item damaged upon delivery')">Damaged Product</div>
+      </div>
+    </div>
+  </div>
+  <div class="chat-ftr">
+    <input type="text" class="chat-input" id="chat-widget-input" placeholder="Type your question..." onkeypress="if(event.key==='Enter')sendChatMessage()"/>
+    <button class="chat-send-btn" onclick="sendChatMessage()">Send</button>
+  </div>
+</div>
+
+</body>
+</html>
