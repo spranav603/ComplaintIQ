@@ -22,3 +22,8 @@ __pycache__/
 .DS_Store
 Thumbs.db
 Desktop.ini
+
+# UI files (local only, not for GitHub)
+login.html
+customer.html
+agent.html
